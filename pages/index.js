@@ -1,65 +1,51 @@
 import Head from 'next/head'
-import styles from '../styles/Home.module.css'
+import { useState, useEffect } from 'react'
 
 export default function Home() {
-  return (
-    <div className={styles.container}>
-      <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+	const [tasksArr, setTasksArr] = useState([])
+	const [dataLoaded, setDataLoaded] = useState(false)
 
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
+	useEffect(() => {
+		if (dataLoaded === false) {
+			loadData()
+		}
+	}, [tasksArr])
 
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
-        </p>
+	const loadData = async () => {
+		const res1 = await fetch(`/api/tasks`)
+		if (res1.status === 400) {
+			console.log('Error ocuured')
+		}
+		const res2 = await res1.json()
+		setDataLoaded(true)
+		setTasksArr(res2)
+		console.log(res2)
+	}
 
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
+	return (
+		<div className='container'>
+			<Head>
+				<title>Tasks</title>
+				<link rel='stylesheet' href='/styles/index.css' />
+				<link rel='icon' href='/favicon.ico' />
+			</Head>
 
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
+			<main>
+				<div>
+					<h1>Space for Title</h1>
+				</div>
 
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div>
-      </main>
-
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
-        </a>
-      </footer>
-    </div>
-  )
+				<div className='tasks'>
+					{tasksArr.map((el, idx) => (
+						<div key={idx} className='task'>
+							<h3>{el.data.title}</h3>
+							<h4>{`${
+								el.data.completed ? 'completed' : 'not-complted'
+							}`}</h4>
+						</div>
+					))}
+				</div>
+			</main>
+		</div>
+	)
 }
