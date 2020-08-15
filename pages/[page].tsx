@@ -2,11 +2,18 @@ import { useState, useEffect } from 'react'
 import { GetServerSideProps } from 'next'
 import Head from 'next/head'
 import EditForm from '@/components/editForm'
-import { validateData, handleUpdateNote } from '@/backend/handleAPI'
+import {
+	validateData,
+	handleUpdateNote,
+	handleDeleteNote
+} from '@/backend/handleAPI'
 import { useRouter } from 'next/router'
+import { ParsedUrlQuery } from 'querystring'
 
 interface PropsList {
-	data: string
+	data: {
+		page: string
+	}
 }
 
 const GetNote = ({ data }: PropsList) => {
@@ -35,7 +42,7 @@ const GetNote = ({ data }: PropsList) => {
 	const loadData = async () => {
 		// fetch data
 		const dataObj = {
-			urlName: data
+			urlName: data.page
 		}
 		const res1 = await fetch(`/api/getNote`, {
 			method: 'POST',
@@ -44,7 +51,7 @@ const GetNote = ({ data }: PropsList) => {
 
 		// check if 'page' is available ?
 		if (res1.status === 400) {
-			return setDescription(`Keyword "${data}" is not in use`)
+			return setDescription(`Keyword "${data.page}" is not in use`)
 		}
 
 		// if 'page' is available, update data
@@ -62,21 +69,33 @@ const GetNote = ({ data }: PropsList) => {
 		setCurrDisplay('edit-note')
 	}
 
-	const handleVerifyKey = () => {
+	const handleUpdateNote1 = () => {
 		setMessage1('')
 		if (!validateData(title, description, url, setMessage1)) return
-		setCurrDisplay('verify-key')
+		setCurrDisplay('update-note')
 	}
 
-	const handleUpdate = async () => {
-		const isUpdated = await handleUpdateNote(
-			title,
-			description,
-			originalKey,
-			userNoteKey,
-			setMessage1
-		)
-		if (isUpdated) router.reload()
+	const handleDeleteNote1 = async () => {
+		setMessage1('')
+		setCurrDisplay('delete-note')
+	}
+
+	const modifyAPI = async (isUpdate: boolean) => {
+		if (originalKey !== userNoteKey) {
+			return setMessage1('Your Key is wrong, try again')
+		}
+		let isModified = false
+		if (isUpdate) {
+			isModified = await handleUpdateNote(
+				title,
+				description,
+				originalKey,
+				setMessage1
+			)
+		} else {
+			isModified = await handleDeleteNote(originalKey, setMessage1)
+		}
+		if (isModified) router.reload()
 	}
 
 	return (
@@ -110,28 +129,49 @@ const GetNote = ({ data }: PropsList) => {
 						url={url}
 						setUrl={setUrl}
 					/>
-					<input
-						id='button'
-						type='button'
-						value='Update'
-						onClick={handleVerifyKey}
-					/>
+					<div style={{ display: 'flex', justifyContent: 'space-around' }}>
+						<input
+							id='button'
+							type='button'
+							value='Update'
+							onClick={handleUpdateNote1}
+						/>
+						<input
+							id='button'
+							type='button'
+							value='Delete'
+							onClick={handleDeleteNote1}
+						/>
+					</div>
 				</form>
 
 				<form
-					style={currDisplay === 'verify-key' ? {} : { display: 'none' }}
+					style={
+						currDisplay === 'update-note' || currDisplay === 'delete-note'
+							? {}
+							: { display: 'none' }
+					}
 				>
 					<input
 						id='p'
 						type='text'
 						onChange={(e) => setUserNoteKey(e.target.value)}
 					/>
-					<input
-						id='button'
-						type='button'
-						value='Publish'
-						onClick={() => handleUpdate()}
-					/>
+					{currDisplay === 'update-note' ? (
+						<input
+							id='button'
+							type='button'
+							value='Publish'
+							onClick={() => modifyAPI(true)}
+						/>
+					) : (
+						<input
+							id='button'
+							type='button'
+							value='Delete'
+							onClick={() => modifyAPI(false)}
+						/>
+					)}
 				</form>
 
 				<section>
@@ -144,8 +184,8 @@ const GetNote = ({ data }: PropsList) => {
 
 export default GetNote
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
+export const getServerSideProps: GetServerSideProps = async ({ params }) => {
 	return {
-		props: { data: context.params.page }
+		props: { data: params }
 	}
 }

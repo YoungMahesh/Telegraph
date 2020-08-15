@@ -47,7 +47,7 @@ export const handlePublishNote = async (
 
 	// 3. if connection problem, display notice
 	if (res1.status === 400) {
-		return setMessage1('Unable to connect with server')
+		return setMessage1('URL is already in use.')
 	}
 
 	// 4. On successfull connection, provide 'Key'
@@ -63,15 +63,10 @@ export const handleUpdateNote = async (
 	title: string,
 	description: string,
 	originalKey: string,
-	userNoteKey: string,
 	setMessage1: Function
 ) => {
 	// 1. check if 'key' matches with 'url'
 	setMessage1('Loading...')
-	if (originalKey !== userNoteKey) {
-		setMessage1('Your Key is wrong, try again')
-		return false
-	}
 
 	const dataObj = {
 		title: title,
@@ -84,6 +79,26 @@ export const handleUpdateNote = async (
 	})
 
 	// 2. if not matched, display-notice
+	if (res1.status === 400) {
+		setMessage1(`Problem with Server`)
+		return false
+	}
+	return true
+}
+
+export const handleDeleteNote = async (
+	originalKey: string,
+	setMessage1: Function
+) => {
+	setMessage1('Loading...')
+	const dataObj = {
+		noteKey: originalKey
+	}
+	const res1 = await fetch(`/api/deleteNote`, {
+		method: 'POST',
+		body: JSON.stringify(dataObj)
+	})
+
 	if (res1.status === 400) {
 		setMessage1(`Problem with Server`)
 		return false
