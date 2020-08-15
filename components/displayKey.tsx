@@ -14,11 +14,13 @@ const DisplayKey = ({ url, noteKey, setMessage1 }: PropsList) => {
 
 	return (
 		<>
-			<p>{`URL: ${url}`}</p>
-			<p>{`Key: ${noteKey}`}</p>
-			<button onClick={copyKey}>Copy URL and Key</button>
+			<p id='p'>{`URL: ${url}`}</p>
+			<p id='p'>{`Key: ${noteKey}`}</p>
+			<button id='button' onClick={copyKey}>
+				Copy URL and Key
+			</button>
 
-			<button onClick={() => Router.push(`/${url}`)}>
+			<button id='button' onClick={() => Router.push(`/${url}`)}>
 				Visit {`"${url}"`}
 			</button>
 		</>

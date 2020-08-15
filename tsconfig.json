@@ -15,8 +15,10 @@
 		"jsx": "preserve",
 		"baseUrl": ".",
 		"paths": {
+			"@/components/*": ["components/*"],
 			"@/database/*": ["database/*"],
-			"@/public/*": ["public/*"]
+			"@/public/*": ["public/*"],
+			"@/backend/*": ["backend/*"]
 		}
 	},
 	"include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],

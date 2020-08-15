@@ -16,6 +16,7 @@ body {
 .container {
 	width: 100vw;
 	height: 100vh;
+	padding-top: 30px;
 }
 
 main {
@@ -23,4 +24,48 @@ main {
 	width: 100%;
 	display: grid;
 	place-items: center;
+}
+
+main > form,
+main > article,
+main > section {
+	width: 80%;
+}
+
+#h1,
+#large_p,
+#p {
+	display: block;
+	padding: 10px;
+	width: 100%;
+}
+
+#large_p,
+#p {
+	font-size: 18px;
+	margin: 20px 0;
+}
+
+#h1 {
+	font-size: 32px;
+	display: block;
+	width: 100%;
+}
+
+#large_p {
+	min-height: 50vh;
+}
+
+#p {
+}
+
+#button {
+	display: block;
+	padding: 10px;
+	background-color: white;
+	border: 2px solid black;
+	border-radius: 30px;
+	cursor: pointer;
+	font-weight: bold;
+	margin-top: 20px;
 }

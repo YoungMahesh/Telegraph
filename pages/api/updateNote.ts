@@ -5,9 +5,11 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 	console.log('Update-Note Request: Executed')
 	if (req.method === 'POST') {
 		try {
-			const { id1, title, description } = await JSON.parse(req.body)
+			const { title, description, noteKey } = await JSON.parse(
+				req.body
+			)
 			const res1 = await client.query(
-				q.Update(q.Ref(q.Collection(collectionName), id1), {
+				q.Update(q.Ref(q.Collection(collectionName), noteKey), {
 					data: { title, description }
 				})
 			)
