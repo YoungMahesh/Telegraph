@@ -1,3 +1,5 @@
+import Router from 'next/router'
+
 interface PropsList {
 	url: string
 	noteKey: string
@@ -14,7 +16,11 @@ const DisplayKey = ({ url, noteKey, setMessage1 }: PropsList) => {
 		<>
 			<p>{`URL: ${url}`}</p>
 			<p>{`Key: ${noteKey}`}</p>
-			<button onClick={copyKey}>Copy</button>
+			<button onClick={copyKey}>Copy URL and Key</button>
+
+			<button onClick={() => Router.push(`/${url}`)}>
+				Visit {`"${url}"`}
+			</button>
 		</>
 	)
 }

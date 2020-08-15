@@ -16,9 +16,11 @@ const CreateForm = ({
 	description,
 	setDescription,
 	url,
-	setUrl, setMessage1, setNoteKey, setCurrDisplay
+	setUrl,
+	setMessage1,
+	setNoteKey,
+	setCurrDisplay
 }: PropsList) => {
-
 	const handleOnPublish = async () => {
 		setMessage1('')
 
@@ -46,6 +48,8 @@ const CreateForm = ({
 		}
 		const res2 = await res1.json()
 		setNoteKey(res2.key1)
+		setTitle('')
+		setDescription('')
 		setCurrDisplay('displayKey')
 	}
 
@@ -63,7 +67,7 @@ const CreateForm = ({
 				placeholder='Write your story'
 				value={description}
 				onChange={(e) => setDescription(e.target.value)}
-			/>
+			></textarea>
 			<input
 				id='url1'
 				type='text'
