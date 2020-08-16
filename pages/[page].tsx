@@ -8,7 +8,6 @@ import {
 	handleDeleteNote
 } from '@/backend/handleAPI'
 import { useRouter } from 'next/router'
-import { ParsedUrlQuery } from 'querystring'
 
 interface PropsList {
 	data: {
@@ -64,20 +63,19 @@ const GetNote = ({ data }: PropsList) => {
 		setOriginalKey(id)
 	}
 
-	const handleEdit = () => {
+	const goToEditPage = () => {
 		setMessage1('')
 		setCurrDisplay('edit-note')
 	}
 
-	const handleUpdateNote1 = () => {
+	const modifyText = (isUpdate: boolean) => {
 		setMessage1('')
-		if (!validateData(title, description, url, setMessage1)) return
-		setCurrDisplay('update-note')
-	}
-
-	const handleDeleteNote1 = async () => {
-		setMessage1('')
-		setCurrDisplay('delete-note')
+		if (isUpdate) {
+			if (!validateData(title, description, url, setMessage1)) return
+			setCurrDisplay('update-note')
+		} else {
+			setCurrDisplay('delete-note')
+		}
 	}
 
 	const modifyAPI = async (isUpdate: boolean) => {
@@ -109,9 +107,12 @@ const GetNote = ({ data }: PropsList) => {
 					style={currDisplay === 'display-note' ? {} : { display: 'none' }}
 				>
 					<h1 id='h1'>{title}</h1>
-					<p id='large_p'>{description}</p>
+					<p id='large_p' style={{ whiteSpace: 'pre-wrap' }}>
+						{/* 'pre-wrap will recognize \n & \t */}
+						{description}
+					</p>
 					{isUrlExisted ? (
-						<button id='button' onClick={handleEdit}>
+						<button id='button' onClick={goToEditPage}>
 							Edit
 						</button>
 					) : null}
@@ -134,13 +135,13 @@ const GetNote = ({ data }: PropsList) => {
 							id='button'
 							type='button'
 							value='Update'
-							onClick={handleUpdateNote1}
+							onClick={() => modifyText(true)}
 						/>
 						<input
 							id='button'
 							type='button'
 							value='Delete'
-							onClick={handleDeleteNote1}
+							onClick={() => modifyText(false)}
 						/>
 					</div>
 				</form>

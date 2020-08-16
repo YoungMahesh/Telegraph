@@ -20,6 +20,10 @@ export default function Home() {
 			<Head>
 				<title>Tasks</title>
 				<link rel='icon' href='/favicon.ico' />
+				<meta
+					property='description'
+					content='Telegraph.now.sh is a minimalist publishing tool that allows you to quickly create richly formatted posts and push them to the Web in just a click. It inspired from Telegra.ph with additional feature to delete your note.'
+				/>
 			</Head>
 
 			<main>
