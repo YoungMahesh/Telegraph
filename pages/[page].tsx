@@ -71,7 +71,7 @@ const GetNote = ({ data }: PropsList) => {
 	const modifyText = (isUpdate: boolean) => {
 		setMessage1('')
 		if (isUpdate) {
-			if (!validateData(title, description, url, setMessage1)) return
+			if (!validateData(title, url, setMessage1)) return
 			setCurrDisplay('update-note')
 		} else {
 			setCurrDisplay('delete-note')

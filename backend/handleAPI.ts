@@ -1,15 +1,12 @@
 export const validateData = (
 	title: string,
-	description: string,
 	url: string,
 	setMessage1: Function
 ) => {
 	if (
 		title.length < 3 ||
-		description.length < 3 ||
 		url.length < 3 ||
 		title.length > 50 ||
-		description.length > 50 ||
 		url.length > 50
 	) {
 		setMessage1(
@@ -32,7 +29,7 @@ export const handlePublishNote = async (
 ) => {
 	// 1. validate data
 	setMessage1('Loading...')
-	if (!validateData(title, description, url, setMessage1)) return
+	if (!validateData(title, url, setMessage1)) return
 
 	// 2. send data to database
 	const dataObj = {
