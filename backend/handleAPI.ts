@@ -29,6 +29,9 @@ export const handlePublishNote = async (
 ) => {
 	// 1. validate data
 	setMessage1('Loading...')
+	title = title.trim()
+	description = description.trim()
+	url = url.trim()
 	if (!validateData(title, url, setMessage1)) return
 
 	// 2. send data to database
@@ -64,6 +67,8 @@ export const handleUpdateNote = async (
 ) => {
 	// 1. check if 'key' matches with 'url'
 	setMessage1('Loading...')
+	title = title.trim()
+	description = description.trim()
 
 	const dataObj = {
 		title: title,
