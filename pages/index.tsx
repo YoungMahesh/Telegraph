@@ -39,6 +39,11 @@ export default function Home() {
 						url={url}
 						setUrl={setUrl}
 					/>
+					{
+						url.length ? (
+							<p>https://telegraph.now.sh/api/{url}</p>
+						) : null
+					}
 					<input
 						id='button'
 						type='button'
