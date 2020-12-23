@@ -18,13 +18,18 @@ export default function Home() {
 	return (
 		<div className='container'>
 			<Head>
-				<title>Tasks</title>
+				<title>Telegraph</title>
 				<link rel='icon' href='/favicon.ico' />
 				<meta
 					property='description'
 					content='Telegraph.now.sh is a minimalist publishing tool that allows you to quickly create richly formatted posts and push them to the Web in just a click. It inspired from Telegra.ph with additional feature to delete your note.'
 				/>
 			</Head>
+
+			<header>
+				<h3> <a href='https://telegra.ph' target='_blank' >Telegr.ph</a> clone</h3>
+				<h4>| <a href='https://github.com/YoungMahesh/Telegraph' target='_blank' >View Source</a> </h4>
+			</header>
 
 			<main>
 				<form
@@ -75,7 +80,12 @@ export default function Home() {
 				<section>
 					<p id='p'>{message1}</p>
 				</section>
+
 			</main>
+
+			<footer>
+				<h5>Note: Articles created on this site are going to be preserved upto 31st March 2021, for guaranteed !</h5>
+			</footer>
 		</div>
 	)
 }

@@ -1,26 +1,35 @@
-html,
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk&display=swap');
+
 body {
-	padding: 0;
 	margin: 0;
-	font-family: Georgia, 'Times New Roman', Times, serif;
+	font-family: 'Space Grotesk', sans-serif;
 	display: grid;
 	place-items: center;
 	font-size: 18px;
 	color: rgba(0, 0, 0, 0.8);
 }
 
-* {
-	box-sizing: border-box;
+
+header {
+	display: flex;
+	justify-content: space-between;
+	padding: 0 20px;
+
+	background-color: bisque;
 }
 
-.container {
-	width: 100vw;
-	height: 100vh;
-	padding-top: 30px;
+footer {
+	margin-top: 15px;
+	text-align: center;
 }
+
+#__next {
+	width: 100%;
+}
+
 
 main {
-	height: 100%;
+	padding-top: 30px;
 	width: 100%;
 	display: grid;
 	place-items: center;
