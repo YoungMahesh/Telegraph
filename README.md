@@ -1,4 +1,4 @@
-## Why I created this site
+## :point_right: Why I created this site :question:
 
 - I truly love [Telegra.ph](https://telegra.ph/), but the only feature I does not like on Telegraph is that you cannot provide your custom-url, it gets generated automatically for you based on title of your post and date of your post.
 - And also if you created page on Telegraph without logging in to the Telegram, then the content on that page cannot be edited. ( I know there are specific reasons for that )
@@ -6,7 +6,7 @@
     - you can provide your custom url for your post
     - you can edit or delete your post even if you are not logged in anywhere.
 
-## System Design
+## :point_right: System Design
 
 - You write your post - Title, Post; then provide custom-url; and if that URL is not already in use then post is published
 - On posting your content, you get a key, which can be used in future to edit or delete your post.
