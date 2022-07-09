@@ -2,15 +2,15 @@ import { NextApiRequest, NextApiResponse } from 'next'
 import { q, client, collectionIdxUrls } from '@/database/fauna'
 
 interface getNote extends Object {
-	ref: {
-		id: string
-	}
-	ts: number
-	data: {
-		title: string
-		description: string
-		url: string
-	}
+  ref: {
+    id: string
+  }
+  ts: number
+  data: {
+    title: string
+    description: string
+    url: string
+  }
 }
 
 // {
@@ -24,28 +24,28 @@ interface getNote extends Object {
 //  }
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
-	console.log('Get-Note Request: Executed')
-	if (req.method === 'POST') {
-		try {
-			const { urlName } = await JSON.parse(req.body)
-			console.log('urlName: ', urlName)
-			const res1: getNote = await client.query(
-				q.Get(q.Match(q.Index(collectionIdxUrls), urlName))
-			)
-			const { ref, data } = res1
-			const { id } = ref
-			const { title, description, url } = data
-			console.log('Get-Note Request: Completed\n', res1)
-			const dataObj = {
-				id,
-				title,
-				description,
-				url
-			}
-			res.status(201).send(dataObj)
-		} catch (err) {
-			console.log('Get-Note Request: Failed\n', err)
-			res.status(400).send({ message: 'Error occured while getting Note' })
-		}
-	}
+  console.log('Get-Note Request: Executed')
+  if (req.method === 'POST') {
+    try {
+      const { urlName } = await JSON.parse(req.body)
+      console.log('urlName: ', urlName)
+      const res1: getNote = await client.query(
+        q.Get(q.Match(q.Index(collectionIdxUrls), urlName))
+      )
+      const { ref, data } = res1
+      const { id } = ref
+      const { title, description, url } = data
+      console.log('Get-Note Request: Completed\n', res1)
+      const dataObj = {
+        id,
+        title,
+        description,
+        url,
+      }
+      res.status(201).send(dataObj)
+    } catch (err) {
+      console.log('Get-Note Request: Failed\n', err)
+      res.status(400).send({ message: 'Error occured while getting Note' })
+    }
+  }
 }
