@@ -50,7 +50,7 @@ const GetNote = ({ data }: PropsList) => {
 
     // check if 'page' is available ?
     if (res1.status === 400) {
-      return setDescription(`Keyword "${data.page}" is not in use`)
+      return setDescription(`Page with this url does not exist`)
     }
 
     // if 'page' is available, update data
@@ -80,7 +80,7 @@ const GetNote = ({ data }: PropsList) => {
 
   const modifyAPI = async (isUpdate: boolean) => {
     if (originalKey !== userNoteKey) {
-      return setMessage1('Your Key is wrong, try again')
+      return setMessage1('This Private Key is wrong, try again')
     }
     let isModified = false
     if (isUpdate) {
@@ -154,6 +154,7 @@ const GetNote = ({ data }: PropsList) => {
           <input
             id="p"
             type="text"
+            placeholder="Private Key"
             onChange={(e) => setUserNoteKey(e.target.value)}
           />
           {currDisplay === 'update-note' ? (

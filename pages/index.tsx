@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import DisplayKey from '@/components/displayKey'
 import EditForm from '@/components/editForm'
 import { handlePublishNote } from '@/backend/handleAPI'
@@ -9,6 +9,8 @@ import Stack from '@mui/material/Stack'
 import Container from '@mui/material/Container'
 
 export default function Home() {
+  const [pageOrigin, setPageOrigin] = useState('')
+
   // show-hide
   const [currDisplay, setCurrDisplay] = useState<string>('edit-note')
   const [message1, setMessage1] = useState<string>('')
@@ -18,6 +20,10 @@ export default function Home() {
   const [description, setDescription] = useState<string>('')
   const [url, setUrl] = useState<string>('')
   const [noteKey, setNoteKey] = useState<string>('')
+
+  useEffect(() => {
+    setPageOrigin(window.location.origin)
+  }, [])
 
   return (
     <div className="container">
@@ -64,7 +70,11 @@ export default function Home() {
             url={url}
             setUrl={setUrl}
           />
-          {url.length ? <p>https://telegraph.now.sh/api/{url}</p> : null}
+          {url.length ? (
+            <p>
+              Your page url will be: {pageOrigin}/{url}
+            </p>
+          ) : null}
 
           <Box
             sx={{ display: 'flex', justifyContent: 'flex-end', width: '100%' }}
